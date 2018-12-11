@@ -64,14 +64,14 @@ class Tool(object):
 
     def __split_pages(self):
         for count_index, num in enumerate(xrange(self.pages_count), 1):
-            page = self.__pages[num] = self.reader.getPage(num)
+            self.__pages[num] = self.reader.getPage(num)
 
             import tempfile
 
             with tempfile.NamedTemporaryFile(delete=False) as tmp:
                 
                 wrt = PdfFileWriter()
-                wrt.addPage(page)
+                wrt.addPage(self.__pages[num])
                 wrt.write(tmp)
                 tmp.close()
 

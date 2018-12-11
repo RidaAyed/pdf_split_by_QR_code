@@ -78,7 +78,7 @@ def test_input_file_qrcodes_count():
     # 4. Assert exception if input.file.qrcode.count < 1
     #
     tool = Tool(INPUT_FILE_VALID)
-    assert len(tool.qrcodes())
+    assert len(tool.qrcodes)
 
 # def test_input_file_each_qrcode_is_valid_path():
 #     #

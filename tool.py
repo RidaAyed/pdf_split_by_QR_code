@@ -45,9 +45,9 @@ class Tool(object):
         # pil = img.convert('L')
         width, height = img.size
         try:
-            raw = pil.tobytes()
+            raw = img.tobytes()
         except AttributeError:
-            raw = pil.tostring()
+            raw = img.tostring()
 
         image = zbar.Image(width, height, mode, raw)
         

@@ -14,15 +14,29 @@ from PyPDF2.utils import PdfReadError
 
 
 class File(object):
-    def __init__(self, source_filename, num, folder, page):
+
+    def __init__(self, source, num, folder):
         
         self.num = num
-        self.page = page
         self.folder = folder
         self.uuid = str(uuid.uuid4())
         
-        self._source_filename = source_filename
-        self.file_name = "{}_{}" .format(self._source_filename, self.uuid)
+        self.source = source
+        self.file_name = "{}_{}" .format(self.source.filename, self.uuid)
+
+    def save(self, folder):
+
+        if not folder:
+            raise ValueError('folder not set')
+
+        page = self.source.reader.getPage(self.num)
+        path = os.path.join(folder, self.file_name)
+
+        with file(path, 'wb') as output: 
+            wrt = PdfFileWriter()
+            wrt.addPage(page)
+            wrt.write(output)
+
 
 
 class Tool(object):
@@ -40,7 +54,7 @@ class Tool(object):
         else:
 
             head, tail = os.path.split(self.source)
-            self.source_filename = '.'.join(tail.split('.')[:-1])
+            self.filename = '.'.join(tail.split('.')[:-1])
             self.__split_pages()
             
         return super(Tool, self).__init__()
@@ -72,10 +86,9 @@ class Tool(object):
                     raise StandardError('First page is not QRcode')
 
                 __files.append(File(
-                    self.source_filename,
+                    self,
                     num, 
-                    folder,
-                    self.__pages.get(num)
+                    folder
                 ))
         return __files
 
@@ -109,12 +122,13 @@ class Tool(object):
 
     def __split_pages(self):
         for count_index, num in enumerate(xrange(self.pages_count), 1):
-            self.__pages[num] = self.reader.getPage(num)
+            self.__pages[num] = True
+            page = self.reader.getPage(num)
 
             with NamedTemporaryFile(delete=False) as tmp:
                 
                 wrt = PdfFileWriter()
-                wrt.addPage(self.__pages[num])
+                wrt.addPage(page)
                 wrt.write(tmp)
                 tmp.close()
 

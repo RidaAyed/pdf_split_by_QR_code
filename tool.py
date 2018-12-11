@@ -2,6 +2,12 @@
 # encoding: utf-8
 
 import io, os, uuid
+from tempfile import NamedTemporaryFile
+
+import zbar
+
+from PIL import Image as PIL_Image
+from wand.image import Image as WAND_Image
 
 from PyPDF2 import PdfFileReader, PdfFileWriter
 from PyPDF2.utils import PdfReadError
@@ -20,18 +26,11 @@ class File(object):
         self.file_name = "{}_{}" .format(self._source_filename, self._uuid)
 
 
-
 class Tool(object):
     def __init__(self, source=None):
         self.source = source
         self.__pages = {}
         self.__qrcodes = {}
-
-        import os
-        head, tail = os.path.split(self.source)
-
-        self.source_filename = '.'.join(tail.split('.')[:-1])
-        
 
         if not self.source:
             raise ValueError('Empty input')
@@ -39,8 +38,12 @@ class Tool(object):
             self.reader = PdfFileReader(file(self.source, "rb"))
         except Exception as er:
             raise StandardError('Is not PDF')
+        else:
 
-        self.__split_pages()
+            head, tail = os.path.split(self.source)
+            self.source_filename = '.'.join(tail.split('.')[:-1])
+            self.__split_pages()
+            
         return super(Tool, self).__init__()
 
     @property
@@ -80,10 +83,7 @@ class Tool(object):
     @staticmethod
     def code(file_path=None, barcode_type='QRCODE'):
 
-        import zbar
-        from PIL import Image
-
-        pil = Image.open(file_path).convert('L')        
+        pil = PIL_Image.open(file_path).convert('L')        
         width, height = pil.size
 
         try:
@@ -112,20 +112,16 @@ class Tool(object):
         for count_index, num in enumerate(xrange(self.pages_count), 1):
             self.__pages[num] = self.reader.getPage(num)
 
-            import tempfile
-
-            with tempfile.NamedTemporaryFile(delete=False) as tmp:
+            with NamedTemporaryFile(delete=False) as tmp:
                 
                 wrt = PdfFileWriter()
                 wrt.addPage(self.__pages[num])
                 wrt.write(tmp)
                 tmp.close()
 
-                from wand.image import Image
-
-                with tempfile.NamedTemporaryFile(delete=False) as out:
+                with NamedTemporaryFile(delete=False) as out:
                     
-                    with Image(filename=tmp.name, resolution=150) as img:
+                    with WAND_Image(filename=tmp.name, resolution=150) as img:
                         img.format = 'jpg'
                         img.save(file=out)
                     

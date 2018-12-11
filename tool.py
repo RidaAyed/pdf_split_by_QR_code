@@ -73,6 +73,7 @@ class Tool(object):
                 wrt = PdfFileWriter()
                 wrt.addPage(page)
                 wrt.write(tmp)
+                tmp.flush()
 
                 from wand.image import Image
 

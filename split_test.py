@@ -73,12 +73,12 @@ def test_input_file_page_count():
     assert tool.pages_count == PAGES_COUNT
     assert len(tool.pages) == PAGES_COUNT
 
-# def test_input_file_qrcodes_count():
-#     #
-#     # 4. Assert exception if input.file.qrcode.count < 1
-#     #
-#     tool = Tool(INPUT_FILE_VALID)
-#     assert len(tool.qrcodes())
+def test_input_file_qrcodes_count():
+    #
+    # 4. Assert exception if input.file.qrcode.count < 1
+    #
+    tool = Tool(INPUT_FILE_VALID)
+    assert len(tool.qrcodes())
 
 # def test_input_file_each_qrcode_is_valid_path():
 #     #

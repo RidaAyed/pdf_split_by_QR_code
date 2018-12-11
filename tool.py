@@ -42,8 +42,6 @@ class Tool(object):
         from PIL import Image
 
         img = Image.open(file_path)
-        scanner = zbar.ImageScanner()
-        scanner.parse_config('enable')
         pil = img.convert('L')
         width, height = pil.size
         try:
@@ -52,6 +50,9 @@ class Tool(object):
             raw = pil.tostring()
 
         image = zbar.Image(width, height, mode, raw)
+        
+        scanner = zbar.ImageScanner()
+        scanner.parse_config('enable')
         result = scanner.scan(image)
 
         barcodes = []

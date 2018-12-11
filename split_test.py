@@ -13,8 +13,8 @@ INPUT_FILE_VALID = 'sample.pdf'
 FILE_IMAGE_PNG = 'sample.png'
 PAGES_COUNT = 6
 FOLDERS = [
-    'C:/dms/reports',
-    'C:/dms/notes',
+    'C:/dms/reports/',
+    'C:/dms/notes/',
 ]
 DIRECTORIES_COUNT = len(FOLDERS)
 FILES_COUNT = 4
@@ -86,7 +86,7 @@ def test_input_file_each_qrcode_is_valid_path():
     #
     tool = Tool(INPUT_FILE_VALID)
     for qrcode in tool.qrcodes:
-        assert qrcode.value in FOLDERS
+        assert qrcode in FOLDERS
 
 
 # # 2. Output

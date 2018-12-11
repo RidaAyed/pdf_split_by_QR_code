@@ -36,7 +36,7 @@ class Tool(object):
         return sum(self.__qrcodes.values(), [])
 
     @staticmethod
-    def code(file_path=None, mode='Y800', barcode_type='QRCODE'):
+    def code(file_path=None, barcode_type='QRCODE'):
 
         import zbar
         from PIL import Image
@@ -49,17 +49,23 @@ class Tool(object):
         except AttributeError:
             raw = pil.tostring()
 
-        image = zbar.Image(width, height, mode, raw)
+        image = zbar.Image(width, height, 'Y800', raw)
         
         scanner = zbar.ImageScanner()
         scanner.parse_config('enable')
         result = scanner.scan(image)
 
         barcodes = []
-        if result:
-            for barcode in image:
-                if not barcode_type or str(barcode.type) == barcode_type:
-                    barcodes.append(barcode.data.decode(u'utf-8'))
+
+        if result == 0: 
+            pass
+        else:
+            for symbol in image:
+                barcodes.append(symbol.data.decode(u'utf-8')) 
+        # if result:
+        #     for barcode in image:
+        #         # if not barcode_type or str(barcode.type) == barcode_type:
+        #         barcodes.append(barcode.data.decode(u'utf-8'))
 
         return barcodes
 
@@ -85,7 +91,7 @@ class Tool(object):
                         img.save(file=out)
                     
                     out.close()
-                    
+
                     self.__qrcodes[num] = Tool.code(out.name)
 
                     os.unlink(out.name)

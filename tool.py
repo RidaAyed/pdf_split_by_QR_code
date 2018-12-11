@@ -20,7 +20,7 @@ class Tool(object):
         except Exception as er:
             raise StandardError('Is not PDF')
 
-        # self.__split()
+        self.__split_pages()
         return super(Tool, self).__init__()
 
     @property
@@ -36,60 +36,50 @@ class Tool(object):
         return sum(self.__qrcodes.values(), [])
 
     @staticmethod
-    def pdf_to_image(page, filetype="PNG", resolution = 72,):
+    def code(file_path=None, mode='Y800', barcode_type='QRCODE'):
 
-        from wand.image import Image
+        import zbar
+        from PIL import Image
 
-        tmp = PdfFileWriter()
-        tmp.addPage(page)
+        img = Image.open(file_path)
+        scanner = zbar.ImageScanner()
+        scanner.parse_config('enable')
+        pil = img.convert('L')
+        width, height = pil.size
+        try:
+            raw = pil.tobytes()
+        except AttributeError:
+            raw = pil.tostring()
 
-
-        from pdf2image import convert_from_bytes
-        
-        
-        wrt = PdfFileWriter()
-        wrt.addPage(page)
-
-        r = io.BytesIO()
-        wrt.write(r)
-
-        images = convert_from_bytes(r.getvalue())
-        images[0].save("1.png")
-
-
-        return img
-
-    @staticmethod
-    def code(file_path=None, img=None, mode='Y800', barcode_type='QRCODE'):
-
-        # import zbar
-
-        # img = img or Image.open(file_path)
-
-        # scanner = zbar.ImageScanner()
-
-        # scanner.parse_config('enable')
-
-        # pil = img.convert('L')
-        # width, height = pil.size
-        # try:
-        #     raw = pil.tobytes()
-        # except AttributeError:
-        #     raw = pil.tostring()
-
-        # image = zbar.Image(width, height, mode, raw)
-        # result = scanner.scan(image)
+        image = zbar.Image(width, height, mode, raw)
+        result = scanner.scan(image)
 
         barcodes = []
-        # if result:
-        #     for barcode in image:
-        #         if not barcode_type or str(barcode.type) == barcode_type:
-        #             barcodes.append(barcode.data.decode(u'utf-8'))
+        if result:
+            for barcode in image:
+                if not barcode_type or str(barcode.type) == barcode_type:
+                    barcodes.append(barcode.data.decode(u'utf-8'))
 
         return barcodes
 
-    # def __split(self):
-    #     for count_index, num in enumerate(xrange(self.pages_count), 1):
-            
-    #         page = self.__pages[num] = self.reader.getPage(num)
-    #         self.__qrcodes[num] = Tool.code(Tool.pdf_to_image(page))
+    def __split_pages(self):
+        for count_index, num in enumerate(xrange(self.pages_count), 1):
+            page = self.__pages[num] = self.reader.getPage(num)
+
+            import tempfile
+
+            with tempfile.NamedTemporaryFile() as tmp:
+                
+                wrt = PdfFileWriter()
+                wrt.addPage(page)
+                wrt.write(tmp)
+
+                from wand.image import Image
+
+                with tempfile.NamedTemporaryFile() as out:
+                    with Image(filename=tmp.name, resolution=300) as img:
+                        img.compression_quality = 100 
+                        img.format = 'png'
+                        img.save(file=out)
+                
+                        self.__qrcodes[num] = Tool.code(out.name)

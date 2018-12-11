@@ -41,7 +41,7 @@ class Tool(object):
         import zbar
         from PIL import Image
 
-        pil = Image.open(file_path)
+        pil = Image.open(file_path).convert('L')
         # pil = im.convert('L')
         width, height = pil.size
         print ('pil.size', file_path, pil.mode, pil.size, len(open(file_path,'rb').read()))

@@ -41,13 +41,20 @@ class Tool(object):
         import zbar
         from PIL import Image
 
-        img = Image.open(file_path)
-        # pil = img.convert('L')
-        width, height = img.size
+        im = Image.open(file_path)
+        
+        bg = Image.new("RGB", im.size, (255,255,255))
+        bg.paste(im, im)
+        jpg_path = "{}.jpg".format(file_path)
+        bg.save(jpg_path)
+        pil = bg.convert('L')
+        width, height = pil.size
         try:
-            raw = img.tobytes()
-        except Exception:
-            raw = img.tostring()
+            raw = pil.tobytes()
+        except AttributeError:
+            raw = pil.tostring()
+        
+        os.unlink(jpg_path)
 
         image = zbar.Image(width, height, mode, raw)
         

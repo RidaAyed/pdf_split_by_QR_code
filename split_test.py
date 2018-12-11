@@ -85,19 +85,19 @@ def test_input_file_each_qrcode_is_valid_path():
     # 5. Assert exception for each if input.file.qrcode != file path format
     #
     tool = Tool(INPUT_FILE_VALID)
-    for qrcode in tool.qrcodes():
+    for qrcode in tool.qrcodes:
         assert qrcode.value in FOLDERS
 
 
 # # 2. Output
 
-# def test_each_output_directories_fullpath_is_one_of_input_qrcode_value():
-#     #
-#     # 1. Assert for each output.directories.fullpath is one of input.qrcode.value[]
-#     #
-#     tool = Tool(INPUT_FILE_VALID)
-#     for each in tool.files():
-#         assert each.folder in FOLDERS
+def test_each_output_directories_fullpath_is_one_of_input_qrcode_value():
+    #
+    # 1. Assert for each output.directories.fullpath is one of input.qrcode.value[]
+    #
+    tool = Tool(INPUT_FILE_VALID)
+    for each in tool.files:
+        assert each.folder in FOLDERS
 
 # def test_output_directories_count():
 #     #

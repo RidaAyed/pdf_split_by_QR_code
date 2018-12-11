@@ -7,6 +7,13 @@ from PyPDF2 import PdfFileReader, PdfFileWriter
 from PyPDF2.utils import PdfReadError
 
 
+class File(object):
+    def __init__(self, num, folder, page):
+        self.num = num
+        self.page = page
+        self.folder = folder
+
+
 class Tool(object):
     def __init__(self, source=None):
         self.source = source
@@ -34,6 +41,27 @@ class Tool(object):
     @property
     def qrcodes(self):
         return sum(self.__qrcodes.values(), [])
+
+    @property
+    def files(self):
+        __files = []
+
+        folder = None
+
+        for num in self.__pages.keys():
+            barcodes = self.__qrcodes.get(num)
+            if barcodes:
+                folder = barcodes[0]
+            else:
+                if not folder:
+                    raise StandardError('First page is not QRcode')
+
+                __files.append(File(
+                    num, 
+                    folder,
+                    self.__pages.get(num)
+                ))
+        return __files
 
     @staticmethod
     def code(file_path=None, barcode_type='QRCODE'):

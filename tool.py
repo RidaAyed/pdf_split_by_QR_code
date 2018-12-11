@@ -1,17 +1,24 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
-import io, os
+import io, os, uuid
 
 from PyPDF2 import PdfFileReader, PdfFileWriter
 from PyPDF2.utils import PdfReadError
 
 
 class File(object):
-    def __init__(self, num, folder, page):
+    def __init__(self, source_filename, num, folder, page):
+        
         self.num = num
         self.page = page
         self.folder = folder
+        
+        self._source_filename = source_filename
+        self._uuid = str(uuid.uuid4())
+        
+        self.file_name = "{}_{}" .format(self._source_filename, self._uuid)
+
 
 
 class Tool(object):
@@ -19,6 +26,12 @@ class Tool(object):
         self.source = source
         self.__pages = {}
         self.__qrcodes = {}
+
+        import os
+        head, tail = os.path.split(self.source)
+
+        self.source_filename = '.'.join(tail.split('.')[:-1])
+        
 
         if not self.source:
             raise ValueError('Empty input')
@@ -57,6 +70,7 @@ class Tool(object):
                     raise StandardError('First page is not QRcode')
 
                 __files.append(File(
+                    self.source_filename,
                     num, 
                     folder,
                     self.__pages.get(num)

@@ -99,30 +99,30 @@ def test_each_output_directories_fullpath_is_one_of_input_qrcode_value():
     for each in tool.files:
         assert each.folder in FOLDERS
 
-# def test_output_directories_count():
-#     #
-#     # 2. Assert output.directories.count == 3
-#     #
-#     directories = []
-#     tool = Tool(INPUT_FILE_VALID)
-#     for each in tool.files():
-#         if each.folder not in directories:
-#             directories.append(each.folder)
-#     assert len(directories) == DIRECTORIES_COUNT
+def test_output_directories_count():
+    #
+    # 2. Assert output.directories.count == 3
+    #
+    directories = []
+    tool = Tool(INPUT_FILE_VALID)
+    for each in tool.files:
+        if each.folder not in directories:
+            directories.append(each.folder)
+    assert len(directories) == DIRECTORIES_COUNT
 
-# def test_output_files_count():
-#     #
-#     # 3. Assert output.files.count == 4
-#     #
-#     directories = []
-#     tool = Tool(INPUT_FILE_VALID)
-#     assert len(tool.files()) == FILES_COUNT
+def test_output_files_count():
+    #
+    # 3. Assert output.files.count == 4
+    #
+    directories = []
+    tool = Tool(INPUT_FILE_VALID)
+    assert len(tool.files) == FILES_COUNT
 
-# def test_output_files_count():
-#     #
-#     # 4. Assert each output.file.name == input.file.name+_+uuid
-#     #
-#     input_file_name = INPUT_FILE_VALID.split('.').pop(0)
-#     tool = Tool(INPUT_FILE_VALID)
-#     for each in tool.files():
-#         assert (each.file_name == '{}_{}'.format(input_file_name, each.uuid))
+def test_output_files_count():
+    #
+    # 4. Assert each output.file.name == input.file.name+_+uuid
+    #
+    input_file_name = INPUT_FILE_VALID.split('.').pop(0)
+    tool = Tool(INPUT_FILE_VALID)
+    for each in tool.files:
+        assert (each.file_name == '{}_{}'.format(input_file_name, each.uuid))

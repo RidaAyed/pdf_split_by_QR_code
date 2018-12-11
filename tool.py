@@ -46,7 +46,7 @@ class Tool(object):
         width, height = img.size
         try:
             raw = img.tobytes()
-        except AttributeError:
+        except Exception:
             raw = img.tostring()
 
         image = zbar.Image(width, height, mode, raw)

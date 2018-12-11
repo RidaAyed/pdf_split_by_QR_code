@@ -9,14 +9,13 @@ from tool import Tool
 INPUT_FILE_NULL = None
 INPUT_FILE_INVALID = 'invalid.pdf'
 INPUT_FILE_VALID = 'sample.pdf'
-
 FILE_IMAGE_PNG = 'sample.png'
-PAGES_COUNT = 6
 FOLDERS = [
     'C:/dms/reports/',
     'C:/dms/notes/',
 ]
 DIRECTORIES_COUNT = len(FOLDERS)
+PAGES_COUNT = 6
 FILES_COUNT = 4
 
 
@@ -33,7 +32,6 @@ def test_wand_pdf_to_png():
     with file(FILE_IMAGE_PNG, 'rb') as test:
         assert test.read()
          
-
 
 # 1. Input
 

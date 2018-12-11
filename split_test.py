@@ -80,13 +80,13 @@ def test_input_file_qrcodes_count():
     tool = Tool(INPUT_FILE_VALID)
     assert len(tool.qrcodes)
 
-# def test_input_file_each_qrcode_is_valid_path():
-#     #
-#     # 5. Assert exception for each if input.file.qrcode != file path format
-#     #
-#     tool = Tool(INPUT_FILE_VALID)
-#     for qrcode in tool.qrcodes():
-#         assert qrcode.value in FOLDERS
+def test_input_file_each_qrcode_is_valid_path():
+    #
+    # 5. Assert exception for each if input.file.qrcode != file path format
+    #
+    tool = Tool(INPUT_FILE_VALID)
+    for qrcode in tool.qrcodes():
+        assert qrcode.value in FOLDERS
 
 
 # # 2. Output

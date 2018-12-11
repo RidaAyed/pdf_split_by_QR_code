@@ -26,6 +26,8 @@ jobs:
             apt-get install imagemagick ghostscript -y
             apt-get install libmagickwand-dev -y
             apt-get install zlib1g-dev -y
+            apt-get install zbar-tools -y
+            apt-get install libzbar-dev -y
             apt-get install ImageMagick -y
             apt-get install libpython-dev -y
             apt-get install python-pip -y

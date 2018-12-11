@@ -42,8 +42,8 @@ class Tool(object):
         from PIL import Image
 
         img = Image.open(file_path)
-        pil = img.convert('L')
-        width, height = pil.size
+        # pil = img.convert('L')
+        width, height = img.size
         try:
             raw = pil.tobytes()
         except AttributeError:
@@ -85,7 +85,7 @@ class Tool(object):
                         img.save(file=out)
                 
                         self.__qrcodes[num] = Tool.code(out.name)
-                        
+
                         os.unlink(out.name)
 
                 os.unlink(tmp.name)

@@ -19,11 +19,10 @@ class File(object):
         self.num = num
         self.page = page
         self.folder = folder
+        self.uuid = str(uuid.uuid4())
         
         self._source_filename = source_filename
-        self._uuid = str(uuid.uuid4())
-        
-        self.file_name = "{}_{}" .format(self._source_filename, self._uuid)
+        self.file_name = "{}_{}" .format(self._source_filename, self.uuid)
 
 
 class Tool(object):

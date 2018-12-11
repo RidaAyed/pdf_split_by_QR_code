@@ -1,0 +1,6 @@
+pytest
+requests
+wand
+Pillow 
+PyPDF2
+zbar

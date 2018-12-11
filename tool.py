@@ -41,8 +41,8 @@ class Tool(object):
         import zbar
         from PIL import Image
 
-        im = Image.open(file_path)
-        pil = im.convert('L')
+        pil = Image.open(file_path)
+        # pil = im.convert('L')
         width, height = pil.size
         try:
             raw = pil.tobytes()

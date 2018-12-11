@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
-import io
+import io, os
 
 from PyPDF2 import PdfFileReader, PdfFileWriter
 from PyPDF2.utils import PdfReadError
@@ -68,19 +68,22 @@ class Tool(object):
 
             import tempfile
 
-            with tempfile.NamedTemporaryFile() as tmp:
+            with tempfile.NamedTemporaryFile(delete=False) as tmp:
                 
                 wrt = PdfFileWriter()
                 wrt.addPage(page)
                 wrt.write(tmp)
-                tmp.flush()
+                tmp.close()
 
                 from wand.image import Image
 
-                with tempfile.NamedTemporaryFile() as out:
+                with tempfile.NamedTemporaryFile(delete=False) as out:
                     with Image(filename=tmp.name, resolution=300) as img:
                         # img.compression_quality = 100 
                         img.format = 'png'
                         img.save(file=out)
                 
                         self.__qrcodes[num] = Tool.code(out.name)
+                        os.unlink(out.name)
+
+                os.unlink(tmp.name)

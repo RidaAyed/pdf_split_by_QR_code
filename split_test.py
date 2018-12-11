@@ -7,8 +7,10 @@ import pytest
 from tool import Tool
 
 INPUT_FILE_NULL = None
-INPUT_FILE_INVALID = 'sample.png'
+INPUT_FILE_INVALID = 'invalid.pdf'
 INPUT_FILE_VALID = 'sample.pdf'
+
+FILE_IMAGE_PNG = 'sample.png'
 PAGES_COUNT = 6
 FOLDERS = [
     'C:/dms/reports',
@@ -18,18 +20,17 @@ DIRECTORIES_COUNT = len(FOLDERS)
 FILES_COUNT = 4
 
 
-
 def test_wand_pdf_to_png():
     
     from wand.image import Image
     
-    with file(INPUT_FILE_INVALID, 'wb') as out:
+    with file(FILE_IMAGE_PNG, 'wb') as out:
         with Image(filename=INPUT_FILE_VALID, resolution=300) as img:
             img.compression_quality = 100 
             img.format = 'png'
             img.save(file=out)
     
-    with file(INPUT_FILE_INVALID, 'rb') as test:
+    with file(FILE_IMAGE_PNG, 'rb') as test:
         assert test.read()
          
 

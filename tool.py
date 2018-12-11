@@ -17,9 +17,7 @@ class Tool(object):
             raise ValueError('Empty input')
         try:
             self.reader = PdfFileReader(file(self.source, "rb"))
-            if not self.pages_count:
-                raise StandardError('Is not PDF')    
-        except PdfReadError as er:
+        except Exception as er:
             raise StandardError('Is not PDF')
 
         # self.__split()

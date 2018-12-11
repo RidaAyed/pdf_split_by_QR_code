@@ -44,7 +44,7 @@ class Tool(object):
         pil = Image.open(file_path)
         # pil = im.convert('L')
         width, height = pil.size
-        print ('pil.size', file_path, pil.size, len(open(file_path,'rb').read()))
+        print ('pil.size', file_path, pil.mode, pil.size, len(open(file_path,'rb').read()))
 
         try:
             raw = pil.tobytes()

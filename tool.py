@@ -41,10 +41,8 @@ class Tool(object):
         import zbar
         from PIL import Image
 
-        pil = Image.open(file_path).convert('L')
-        # pil = im.convert('L')
+        pil = Image.open(file_path).convert('L')        
         width, height = pil.size
-        print ('pil.size', file_path, pil.mode, pil.size, len(open(file_path,'rb').read()))
 
         try:
             raw = pil.tobytes()
@@ -62,13 +60,10 @@ class Tool(object):
         if result == 0: 
             pass
         else:
-            for symbol in image:
-                barcodes.append(symbol.data.decode(u'utf-8')) 
-        # if result:
-        #     for barcode in image:
-        #         # if not barcode_type or str(barcode.type) == barcode_type:
-        #         barcodes.append(barcode.data.decode(u'utf-8'))
-
+            for barcode in image:
+                if not barcode_type or str(barcode.type) == barcode_type:
+                    barcodes.append(barcode.data.decode(u'utf-8'))
+            
         return barcodes
 
     def __split_pages(self):

@@ -79,11 +79,11 @@ class Tool(object):
 
                 with tempfile.NamedTemporaryFile(delete=False) as out:
                     with Image(filename=tmp.name, resolution=300) as img:
-                        # img.compression_quality = 100 
+
                         img.format = 'png'
                         img.save(file=out)
                 
-                        self.__qrcodes[num] = Tool.code(out.name)
+                        # self.__qrcodes[num] = Tool.code(out.name)
                         os.unlink(out.name)
 
                 os.unlink(tmp.name)

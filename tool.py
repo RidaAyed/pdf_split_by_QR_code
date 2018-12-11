@@ -80,10 +80,12 @@ class Tool(object):
 
                 with tempfile.NamedTemporaryFile(delete=False) as out:
                     
-                    with Image(filename=tmp.name, resolution=300) as img:
+                    with Image(filename=tmp.name, resolution=150) as img:
                         img.format = 'jpg'
                         img.save(file=out)
-                
+                    
+                    out.close()
+                    
                     self.__qrcodes[num] = Tool.code(out.name)
 
                     os.unlink(out.name)

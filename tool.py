@@ -42,7 +42,7 @@ class Tool(object):
         from PIL import Image
 
         im = Image.open(file_path)
-        
+        # im = im.convert('RGB')
         bg = Image.new("RGB", im.size, (255,255,255))
         bg.paste(im, im)
         jpg_path = "{}.jpg".format(file_path)
@@ -86,12 +86,12 @@ class Tool(object):
                 from wand.image import Image
 
                 with tempfile.NamedTemporaryFile(delete=False) as out:
+                    
                     with Image(filename=tmp.name, resolution=300) as img:
-
-                        img.format = 'png'
+                        img.format = 'jpg'
                         img.save(file=out)
                 
-                        self.__qrcodes[num] = Tool.code(out.name)
+                        # self.__qrcodes[num] = Tool.code(out.name)
 
                         os.unlink(out.name)
 

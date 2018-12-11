@@ -17,10 +17,12 @@ class Tool(object):
             raise ValueError('Empty input')
         try:
             self.reader = PdfFileReader(file(self.source, "rb"))
+            if not self.pages_count:
+                raise StandardError('Is not PDF')    
         except PdfReadError as er:
             raise StandardError('Is not PDF')
 
-        self.__split()
+        # self.__split()
         return super(Tool, self).__init__()
 
     @property
@@ -88,8 +90,8 @@ class Tool(object):
 
         return barcodes
 
-    def __split(self):
-        for count_index, num in enumerate(xrange(self.pages_count), 1):
+    # def __split(self):
+    #     for count_index, num in enumerate(xrange(self.pages_count), 1):
             
-            page = self.__pages[num] = self.reader.getPage(num)
-            self.__qrcodes[num] = Tool.code(Tool.pdf_to_image(page))
+    #         page = self.__pages[num] = self.reader.getPage(num)
+    #         self.__qrcodes[num] = Tool.code(Tool.pdf_to_image(page))

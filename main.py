@@ -14,8 +14,11 @@ Use this script as:
 
 def process(source):
     try:
-        Tool(source).work()
-    except:
+        tool = Tool(source)
+        for each in tool.file:
+            print(each)
+    except Exception as e:
+        print(e)
         return 2
     return 0
 

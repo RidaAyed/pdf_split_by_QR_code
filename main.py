@@ -15,7 +15,7 @@ Use this script as:
 def process(source):
     try:
         tool = Tool(source)
-        for each in tool.file:
+        for each in tool.files:
             print(each)
     except Exception as e:
         print(e)

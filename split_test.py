@@ -23,13 +23,13 @@ def test_wand_pdf_to_png():
     
     from wand.image import Image
     
-    with file(FILE_IMAGE_PNG, 'wb') as out:
+    with open(FILE_IMAGE_PNG, 'wb') as out:
         with Image(filename=INPUT_FILE_VALID, resolution=300) as img:
             img.compression_quality = 100 
             img.format = 'png'
             img.save(file=out)
     
-    with file(FILE_IMAGE_PNG, 'rb') as test:
+    with open(FILE_IMAGE_PNG, 'rb') as test:
         assert test.read()
          
 

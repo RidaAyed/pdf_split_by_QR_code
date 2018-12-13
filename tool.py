@@ -83,7 +83,7 @@ class Tool(object):
                 folder = barcodes[0]
             else:
                 if not folder:
-                    raise StandardError('First page is not QRcode')
+                    raise ValueError('First page is not QRcode')
 
                 __files.append(File(
                     self,
@@ -97,7 +97,7 @@ class Tool(object):
    
         import zbar
         import zbar.misc
-        from freeimage import read as read_image
+        from skimage.io import imread as read_image
         
         image = read_image(file_path)
         

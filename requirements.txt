@@ -1,5 +1,5 @@
 pytest
 wand
-Pillow 
 PyPDF2
-zbar
+zbar-py
+scikit-image

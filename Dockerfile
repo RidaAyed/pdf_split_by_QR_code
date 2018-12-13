@@ -12,5 +12,5 @@ RUN pip install -r requirements.txt
 
 # WORKDIR /ext
 
-ENTRYPOINT [ "pytest" ]
+ENTRYPOINT [ "pytest -vs" ]
 # ENTRYPOINT [ "python", "/opt/pdf_split_by_QR_code/main.py"]

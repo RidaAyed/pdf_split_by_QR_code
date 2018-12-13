@@ -5,8 +5,9 @@ import io, os, uuid
 from tempfile import NamedTemporaryFile
 
 import zbar
+import zbar.misc
+from skimage.io import imread as read_image
 
-from PIL import Image as PIL_Image
 from wand.image import Image as WAND_Image
 
 from PyPDF2 import PdfFileReader, PdfFileWriter
@@ -95,9 +96,7 @@ class Tool(object):
     @staticmethod
     def code(file_path=None, barcode_type='QRCODE'):
    
-        import zbar
-        import zbar.misc
-        from skimage.io import imread as read_image
+        
         
         image = read_image(file_path)
         

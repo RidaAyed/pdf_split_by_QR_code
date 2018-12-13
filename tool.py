@@ -94,29 +94,23 @@ class Tool(object):
 
     @staticmethod
     def code(file_path=None, barcode_type='QRCODE'):
-
-        pil = PIL_Image.open(file_path).convert('L')        
-        width, height = pil.size
-
-        try:
-            raw = pil.tobytes()
-        except AttributeError:
-            raw = pil.tostring()
-
-        image = zbar.Image(width, height, 'Y800', raw)
+   
+        import zbar
+        import zbar.misc
+        from freeimage import read as read_image
         
-        scanner = zbar.ImageScanner()
-        scanner.parse_config('enable')
-        result = scanner.scan(image)
-
+        image = read_image(file_path)
+        
+        if len(image.shape) == 3:
+            image = zbar.misc.rgb2gray(image)
+        
         barcodes = []
 
-        if result == 0: 
-            pass
-        else:
-            for barcode in image:
-                if not barcode_type or str(barcode.type) == barcode_type:
-                    barcodes.append(barcode.data.decode(u'utf-8'))
+        scanner = zbar.Scanner()
+        results = scanner.scan(image)
+        for barcode in results:
+            barcodes.append(barcode.data.decode(u'utf-8'))    
+        
             
         return barcodes
 

@@ -6,7 +6,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: python:3.7.1-jessie
+      - image: python:3.6.7-jessie
 
     working_directory: ~/pdf_split_by_QR_code
 

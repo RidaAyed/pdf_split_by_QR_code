@@ -121,7 +121,7 @@ class Tool(object):
         return barcodes
 
     def __split_pages(self):
-        for count_index, num in enumerate(xrange(self.pages_count), 1):
+        for count_index, num in enumerate(range(self.pages_count), 1):
             self.__pages[num] = True
             page = self.reader.getPage(num)
 

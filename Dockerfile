@@ -1,16 +1,24 @@
-FROM python:2.7
+FROM base/archlinux
 MAINTAINER Aleksey Molchanov <molchanov.av@gmail.com>
 
-RUN apt-get update && \
-    apt-get install -y build-essential libzbar-dev libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev libpng-dev imagemagick ghostscript libmagickwand-dev zbar-tools zlib1g-dev libzbar-dev libpython-dev 
+RUN pacman -Syu
+RUN pacman -S git file awk gcc --noconfirm
+RUN pacman -S python python-pip --noconfirm
+RUN pacman -S base-devel --noconfirm
+RUN pacman -S zbar --noconfirm
+RUN pacman -S ghostscript --noconfirm
+RUN pacman -S python-wand --noconfirm
+
+RUN pip install pytest
+RUN pip install wand
+RUN pip install PyPDF2
+RUN pip install zbar-py
+RUN pip install scikit-image
+
+RUN echo '<policy domain="coder" rights="read|write" pattern="PDF" />' >> /etc/ImageMagick-6/policy.xml
 
 RUN mkdir -p /opt/
 RUN git clone https://github.com/AlekseyMolchanov/pdf_split_by_QR_code.git  /opt/pdf_split_by_QR_code
-
 WORKDIR /opt/pdf_split_by_QR_code
-RUN pip install -r requirements.txt
 
-# WORKDIR /ext
-
-ENTRYPOINT [ "pytest -vs" ]
-# ENTRYPOINT [ "python", "/opt/pdf_split_by_QR_code/main.py"]
+ENTRYPOINT [ "pytest" ]

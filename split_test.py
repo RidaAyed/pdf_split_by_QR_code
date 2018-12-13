@@ -53,7 +53,7 @@ def test_not_PDF_input_file():
     #
     # 2. Assert exception if input.file != filetype pdf
     #
-    with pytest.raises(StandardError, match=r'Is not PDF'):
+    with pytest.raises(ValueError, match=r'Is not PDF'):
         tool = Tool(INPUT_FILE_INVALID)
 
 def test_PDF_input_file():

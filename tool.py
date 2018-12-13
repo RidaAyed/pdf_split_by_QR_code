@@ -32,7 +32,7 @@ class File(object):
         page = self.source.reader.getPage(self.num)
         path = os.path.join(folder, self.file_name)
 
-        with file(path, 'wb') as output: 
+        with open(path, 'wb') as output: 
             wrt = PdfFileWriter()
             wrt.addPage(page)
             wrt.write(output)
@@ -48,9 +48,9 @@ class Tool(object):
         if not self.source:
             raise ValueError('Empty input')
         try:
-            self.reader = PdfFileReader(file(self.source, "rb"))
+            self.reader = PdfFileReader(open(self.source, "rb"))
         except Exception as er:
-            raise StandardError('Is not PDF')
+            raise ValueError('Is not PDF')
         else:
 
             head, tail = os.path.split(self.source)

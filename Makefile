@@ -10,6 +10,5 @@ build:
 docker_test:
 	docker run -it --rm pdf_qr_code_split
 	
-docker_sample:
-	docker run -it --rm --entrypoint "python main.py ./sample.pdf" pdf_qr_code_split
-	
+docker_sample:	
+	docker run -it  --rm -v $(pwd):/ext --entrypoint "python" pdf_qr_code_split main.py ./sample.pdf

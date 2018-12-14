@@ -35,8 +35,7 @@ jobs:
             virtualenv venv
             . venv/bin/activate
             pip install -r requirements.txt
-            pip install codecov
-            pip install pytest pytest-cov
+            pip install codecov pytest pytest-cov
               
       - save_cache:
           paths:
@@ -48,10 +47,12 @@ jobs:
           command: |
             . venv/bin/activate
             pytest -vs 
-            pytest --cov=./
+            
       -  run:
           name: upload coverage report
           command: |
+            . venv/bin/activate
+            pytest --cov=./
             codecov || echo "Error in uploading coverage reports to codecov.io."      
 
       - store_artifacts:

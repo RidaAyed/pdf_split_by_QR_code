@@ -123,4 +123,4 @@ def test_output_files_count():
     input_file_name = INPUT_FILE_VALID.split('.').pop(0)
     tool = Tool(INPUT_FILE_VALID)
     for each in tool.files:
-        assert (each.file_name == '{}_{}'.format(input_file_name, each.uuid))
+        assert (each.file_name == '{}_{}.pdf'.format(input_file_name, each.uuid))

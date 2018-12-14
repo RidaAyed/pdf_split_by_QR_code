@@ -35,6 +35,7 @@ jobs:
             virtualenv venv
             . venv/bin/activate
             pip install -r requirements.txt
+            pip install codecov
             pip install pytest pytest-cov
               
       - save_cache:

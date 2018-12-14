@@ -6,6 +6,9 @@ Small tool to split pdf document into pages by QR code
 
 # Usage
 
+all commands available in Makefile
+
+
 Use this script as:
 
   ./main.py <source file path>
@@ -13,3 +16,28 @@ Use this script as:
 Example:
 
   ./main.py sample.pdf
+
+
+# Tests
+  
+  pytest -vs
+  
+  
+#Docker
+
+  build:
+  
+  docker build --rm -f "Dockerfile" -t pdf_qr_code_split:latest .
+
+  run tests:
+  
+  docker run -it --rm pdf_qr_code_split
+  
+  run sample:
+  docker run -it --rm --entrypoint "python main.py ./sample.pdf" pdf_qr_code_split
+
+
+
+
+
+  

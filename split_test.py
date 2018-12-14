@@ -116,7 +116,7 @@ def test_output_files_count():
     tool = Tool(INPUT_FILE_VALID)
     assert len(tool.files) == FILES_COUNT
 
-def test_output_files_count():
+def test_output_files_name():
     #
     # 4. Assert each output.file.name == input.file.name+_+uuid
     #

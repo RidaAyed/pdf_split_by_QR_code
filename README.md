@@ -28,6 +28,8 @@ run tests:
     docker run -it --rm pdf_qr_code_split
   
 run sample:
+
+    > the tool will try find folder inside the container, not in your file system
     
     docker run -it  --rm -v $(pwd):/ext --entrypoint "python" pdf_qr_code_split main.py ./sample.pdf
 

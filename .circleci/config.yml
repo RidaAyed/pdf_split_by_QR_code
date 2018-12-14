@@ -35,9 +35,6 @@ jobs:
             virtualenv venv
             . venv/bin/activate
             pip install -r requirements.txt
-      - run:
-          name: Send to Codecov
-          command: "bash <(curl -s https://codecov.com/bash) -t $CODECOV_TOKEN"
               
       - save_cache:
           paths:
@@ -49,6 +46,10 @@ jobs:
           command: |
             . venv/bin/activate
             pytest -vs
+      -  run:
+          name: upload coverage report
+          command: |
+            pip install codecov && codecov || echo "Error in uploading coverage reports to codecov.io."      
 
       - store_artifacts:
           path: test-reports

@@ -27,9 +27,6 @@ class File(object):
 
     def save(self, folder=None):
         
-        if not folder:
-            raise ValueError('folder not set')
-            
         tmpl = "[%s] from file '%s' copy page (%s) to %s"
 
         page = self.source.reader.getPage(self.num)

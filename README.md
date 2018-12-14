@@ -14,6 +14,7 @@ Example
     ./main.py sample.pdf
 
 # Tests
+
     pytest -vs
   
 # Docker
@@ -28,7 +29,7 @@ run tests:
   
 run sample:
     
-    docker run -it --rm --entrypoint "python main.py ./sample.pdf" pdf_qr_code_split
+    docker run -it  --rm -v $(pwd):/ext --entrypoint "python" pdf_qr_code_split main.py ./sample.pdf
 
 
 

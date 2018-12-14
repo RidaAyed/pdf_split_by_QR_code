@@ -16,7 +16,7 @@ def process(source):
     try:
         tool = Tool(source)
         for each in tool.files:
-            print(each)
+            print(each.save())
     except Exception as e:
         print(e)
         return 2

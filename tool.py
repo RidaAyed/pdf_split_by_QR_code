@@ -23,21 +23,26 @@ class File(object):
         self.uuid = str(uuid.uuid4())
         
         self.source = source
-        self.file_name = "{}_{}" .format(self.source.filename, self.uuid)
+        self.file_name = "{}_{}.pdf" .format(self.source.filename, self.uuid)
 
-    def save(self, folder):
-
+    def save(self, folder=None):
+        
         if not folder:
             raise ValueError('folder not set')
+            
+        tmpl = "[%s] from file '%s' copy page (%s) to %s"
 
         page = self.source.reader.getPage(self.num)
-        path = os.path.join(folder, self.file_name)
-
-        with open(path, 'wb') as output: 
-            wrt = PdfFileWriter()
-            wrt.addPage(page)
-            wrt.write(output)
-
+        path = os.path.join(folder or self.folder, self.file_name)
+        
+        try:
+            with open(path, 'wb') as output: 
+                wrt = PdfFileWriter()
+                wrt.addPage(page)
+                wrt.write(output)
+                return tmpl % ('ok', self.source.source, self.num, path)
+        except Exception as ex:
+            return tmpl % (ex, self.source.source, self.num, path)
 
 
 class Tool(object):

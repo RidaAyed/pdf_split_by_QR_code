@@ -12,3 +12,9 @@ docker_test:
 	
 docker_sample:	
 	docker run -it  --rm -v $(pwd):/ext --entrypoint "python" pdf_qr_code_split main.py ./sample.pdf
+
+work:
+	docker run -it  --rm \
+			-v /home/ra/Dropbox:/dropbox \
+			-v /home/ra/sources:/sources \
+			--entrypoint "python" pdf_qr_code_split main.py /sources/sample.pdf

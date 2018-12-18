@@ -53,7 +53,7 @@ class Tool(object):
         try:
             self.reader = PdfFileReader(open(self.source, "rb"))
         except Exception as er:
-            raise ValueError('Is not PDF')
+            raise ValueError('Is not PDF [%s]' % self.source)
         else:
 
             head, tail = os.path.split(self.source)

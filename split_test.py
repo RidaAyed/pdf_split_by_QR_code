@@ -46,14 +46,14 @@ def test_null_input_file():
     #
     # 1. Assert exception if input.file == null or empty
     #
-    with pytest.raises(ValueError, match=r'Empty input .*'):
+    with pytest.raises(ValueError, match=r'Source is not set'):
         tool = Tool(INPUT_FILE_NULL)
 
 def test_not_PDF_input_file():
     #
     # 2. Assert exception if input.file != filetype pdf
     #
-    with pytest.raises(ValueError, match=r'Is not PDF'):
+    with pytest.raises(ValueError, match=r'Is not PDF .*'):
         tool = Tool(INPUT_FILE_INVALID)
 
 def test_PDF_input_file():

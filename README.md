@@ -35,6 +35,15 @@ run sample:
     
     docker run -it  --rm -v $(pwd):/ext --entrypoint "python" pdf_qr_code_split main.py ./sample.pdf
 
+run as script:
+
+    > you must map correct folders and generate right qrcodes
+
+    docker run -it  --rm \
+			-v $$(pwd)/Dropbox:/Dropbox \
+			-v $$(pwd)/sources:/sources \
+			--entrypoint "python" pdf_qr_code_split main.py /sources/sample.pdf
+
 
 
 

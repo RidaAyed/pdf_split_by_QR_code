@@ -16,6 +16,4 @@ RUN git clone https://github.com/AlekseyMolchanov/pdf_split_by_QR_code.git  /opt
 WORKDIR /opt/pdf_split_by_QR_code
 RUN pip install -r requirements.txt
 
-RUN git  pull
-
 ENTRYPOINT [ "pytest" ]

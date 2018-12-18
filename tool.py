@@ -49,7 +49,7 @@ class Tool(object):
         self.__qrcodes = {}
 
         if not self.source:
-            raise ValueError('Empty input')
+            raise ValueError('Source is not set')
         try:
             self.reader = PdfFileReader(open(self.source, "rb"))
         except Exception as er:

@@ -30,3 +30,4 @@ def main(_, source = None, *args):
 
 if __name__ == "__main__":
     exit(main(*list(sys.argv or [])))
+    

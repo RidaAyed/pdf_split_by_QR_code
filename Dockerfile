@@ -1,7 +1,7 @@
 FROM base/archlinux
 MAINTAINER Aleksey Molchanov <molchanov.av@gmail.com>
 
-RUN pacman -Syu
+RUN pacman -Syu --noconfirm
 RUN pacman -S git file awk gcc --noconfirm
 RUN pacman -S python python-pip --noconfirm
 RUN pacman -S base-devel --noconfirm

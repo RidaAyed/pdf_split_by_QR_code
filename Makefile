@@ -7,6 +7,9 @@ test:
 build:
 	docker build --rm -f "Dockerfile" -t pdf_qr_code_split:latest .
 
+clear_build:
+	docker build --no-cache --rm -f "Dockerfile" -t pdf_qr_code_split:latest .
+	
 docker_test:
 	docker run -it --rm pdf_qr_code_split
 	
